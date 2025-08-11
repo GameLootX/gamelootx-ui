@@ -10,8 +10,33 @@
   <div class="container">
     <img src="assets/logo.png" alt="GameLootX Logo" class="logo" />
     <h1>Welcome to GameLootX</h1>
-    <button id="connectBtn">Connect Wallet</button>
+    <button id="connectBtn">🔗 Connect Wallet</button>
+
+    <div class="referral" id="referralLink">
+      <!-- Referral link will appear here -->
+    </div>
   </div>
-  <script src="scripts/app.js"></script>
+
+  <script>
+    Telegram.WebApp.ready();
+
+    const userId = Telegram.WebApp.initDataUnsafe?.user?.id;
+    const referralCode = `GLX${userId?.toString().slice(-6)}`;
+
+    document.getElementById("connectBtn").addEventListener("click", () => {
+      Telegram.WebApp.sendData(JSON.stringify({
+        message: {
+          text: "/connect_wallet",
+          chat: { id: userId }
+        }
+      }));
+    });
+
+    // Show referral link
+    document.getElementById("referralLink").innerHTML = `
+      <p>Your referral link:</p>
+      <code>https://t.me/GameLootXBot?start=${referralCode}</code>
+    `;
+  </script>
 </body>
 </html>
