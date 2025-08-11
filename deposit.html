@@ -1,5 +1,90 @@
-git init
-git add .
-git commit -m "Add deposit.html"
-git remote add origin https://github.com/<your-username>/gameloootx-frontend.git
-git push -u origin main
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deposit | GameLootX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background: #121212;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,255,153,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #00ff99;
+    }
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    button {
+      background: #00ff99;
+      color: #000;
+      border: none;
+      padding: 14px 24px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background: #00cc7a;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Deposit Coins</h2>
+    <input type="number" id="amount" placeholder="Enter amount (min $10)" />
+    <button onclick="deposit()">Proceed to Payment</button>
+  </div>
+
+  <script>
+    async function deposit() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      if (!amount || amount < 10) {
+        alert("Minimum deposit is $10");
+        return;
+      }
+
+      const res = await fetch('/functions/initiatePayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: 5778437193, // Replace with dynamic Telegram ID
+          amount
+        })
+      });
+
+      const data = await res.json();
+      if (data.payment_url) {
+        window.open(data.payment_url, "_blank"); // NOWPayments handles method selection
+      } else {
+        alert("Payment failed");
+      }
+    }
+  </script>
+</body>
+</html>
