@@ -1,57 +1,63 @@
-// /functions/ipn.ts
-
 import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
-export async function onRequestPost({ request }) {
+const supabase = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+);
+
+export async function onRequestPost(context) {
   try {
-    const body = await request.json();
+    const body = await context.request.json();
+    const { message } = body;
+    const chatId = message?.chat?.id;
+    const text = message?.text;
 
-    const {
-      payment_id,
-      order_id,
-      payment_status,
-      price_amount,
-      pay_currency
-    } = body;
-
-    // ✅ Only proceed if payment is marked as finished
-    if (payment_status !== "finished") {
-      return new Response("Payment not completed", { status: 200 });
+    if (!chatId || !text) {
+      return new Response("Invalid payload", { status: 400 });
     }
 
-    // ✅ Extract user_id from order_id format: GLX-<user_id>-<timestamp>
-    const parts = order_id?.split("-");
-    const user_id = parts?.[1];
+    let reply = "🤖 Command not recognized.";
 
-    if (!user_id) {
-      return new Response("Invalid order_id format", { status: 400 });
+    // Handle /connect_wallet
+    if (text === "/connect_wallet") {
+      await supabase.from("users").upsert({ id: chatId });
+      reply = "🔗 Wallet connected successfully!";
     }
 
-    // ✅ Connect to Supabase with locked credentials
-    const supabase = createClient(
-      process.env.SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    // Handle /start with referral code
+    if (text.startsWith("/start ")) {
+      const referralCode = text.split(" ")[1];
 
-    // ✅ Insert deposit record
-    const { error } = await supabase.from("deposits").insert({
-      user_id,
-      amount: price_amount,
-      currency: pay_currency,
-      payment_id,
-      status: "completed",
-      created_at: new Date().toISOString()
+      // Find referrer
+      const { data: referrer } = await supabase
+        .from("users")
+        .select("id")
+        .eq("referral_code", referralCode)
+        .single();
+
+      if (referrer) {
+        // Tag new user
+        await supabase.from("users").upsert({
+          id: chatId,
+          referrer_id: referrer.id
+        });
+
+        // Insert referral
+        await supabase.from("referrals").insert({
+          referral_code: referralCode,
+          new_user: chatId,
+          status: "pending"
+        });
+
+        reply = "🎉 Referral tracked! Welcome to GameLootX.";
+      }
+    }
+
+    return new Response(JSON.stringify({ method: "sendMessage", chat_id: chatId, text: reply }), {
+      headers: { "Content-Type": "application/json" }
     });
-
-    if (error) {
-      console.error("Supabase insert error:", error);
-      return new Response("Database error", { status: 500 });
-    }
-
-    return new Response("Deposit logged", { status: 200 });
-
   } catch (err) {
-    console.error("Webhook error:", err);
-    return new Response("Invalid payload", { status: 400 });
+    console.error("Function error:", err);
+    return new Response("Internal error", { status: 500 });
   }
 }
