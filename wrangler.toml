@@ -1,5 +1,5 @@
-name = "gamelootx"
-compatibility_date = "2025-08-12"
+name = "gamelootx-ui"
+compatibility_date = "2025-08-13"
 
 [build]
 command = "echo \"skip\""
@@ -8,4 +8,10 @@ command = "echo \"skip\""
 bucket = "."
 entry-point = "functions"
 
-pages_build_output_dir = "."
+[vars]
+# Add non-secret environment variables here if needed
+# EXAMPLE_VAR = "value"
+
+# Optional bindings (KV, D1, etc.)
+# [bindings]
+# MY_KV = { type = "kv", name = "my-kv-namespace" }
