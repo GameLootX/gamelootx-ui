@@ -1,0 +1,18 @@
+name = "gamelootx"
+compatibility_date = "2025-08-12"
+
+[site]
+bucket = "."
+entry-point = "functions"
+
+vars = {
+  BOT_TOKEN = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
+  ADMIN_ID = "987654321",
+  NOWPAYMENTS_API_KEY = "np_test_abcdef1234567890",
+  SUPABASE_URL = "https://gamelootx.supabase.co",
+  SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.testpayload.signature"
+}
+
+[build]
+command = "echo \"skip\""
+directory = "."
