@@ -12,3 +12,7 @@ vars = {
   SUPABASE_URL = "https://gamelootx.supabase.co",
   SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.testpayload.signature"
 }
+
+[build]
+command = "echo \"skip\""
+directory = "."
