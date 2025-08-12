@@ -1,7 +1,12 @@
-name = "gamelootx-ui"
-type = "javascript"
+name = "gamelootx"
 compatibility_date = "2025-08-12"
 
 [site]
 bucket = "."
 entry-point = "functions"
+
+vars.BOT_TOKEN = "8451731848:AAH9QzDbCdUq5PoQtmwyLucmSlkMpSjEBJM"
+vars.ADMIN_ID = "5778437193"
+vars.NOWPAYMENTS_API_KEY = "C3W1DDF-C4GMSZC-HQPJC7M-MJWWSNQ"
+vars.SUPABASE_URL = "https://fzduhyreyrwczebvtsmg.supabase.co"
+vars.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
