@@ -3,6 +3,8 @@ export async function onRequestPost({ request }) {
   const chat_id = body.message?.chat?.id;
   const text = body.message?.text;
 
+  if (!chat_id || !text) return new Response("Invalid payload");
+
   const reply = `You said: ${text}`;
 
   await fetch(`https://api.telegram.org/bot${Deno.env.get("BOT_TOKEN")}/sendMessage`, {
