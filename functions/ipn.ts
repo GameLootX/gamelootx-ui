@@ -1,5 +1,7 @@
 export async function onRequestPost({ request }) {
   const body = await request.json();
+  console.log("Received payload:", JSON.stringify(body));
+
   const chat_id = body.message?.chat?.id;
   const text = body.message?.text;
 
