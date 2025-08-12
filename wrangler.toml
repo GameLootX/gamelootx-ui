@@ -7,11 +7,3 @@ command = "echo \"skip\""
 [site]
 bucket = "."
 entry-point = "functions"
-
-[vars]
-# Add non-secret environment variables here if needed
-# EXAMPLE_VAR = "value"
-
-# Optional bindings (KV, D1, etc.)
-# [bindings]
-# MY_KV = { type = "kv", name = "my-kv-namespace" }
