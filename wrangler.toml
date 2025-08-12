@@ -5,8 +5,10 @@ compatibility_date = "2025-08-12"
 bucket = "."
 entry-point = "functions"
 
-vars.BOT_TOKEN = "8451731848:AAH9QzDbCdUq5PoQtmwyLucmSlkMpSjEBJM"
-vars.ADMIN_ID = "5778437193"
-vars.NOWPAYMENTS_API_KEY = "C3W1DDF-C4GMSZC-HQPJC7M-MJWWSNQ"
-vars.SUPABASE_URL = "https://fzduhyreyrwczebvtsmg.supabase.co"
-vars.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+vars = {
+  BOT_TOKEN = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11",
+  ADMIN_ID = "987654321",
+  NOWPAYMENTS_API_KEY = "np_test_abcdef1234567890",
+  SUPABASE_URL = "https://gamelootx.supabase.co",
+  SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.testpayload.signature"
+}
