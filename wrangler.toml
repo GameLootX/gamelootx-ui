@@ -1,9 +1,4 @@
-name = "gamelootx-ui"
-compatibility_date = "2025-08-13"
-
-[build]
-command = "echo \"skip\""
-
-[site]
-bucket = "."
-entry-point = "functions"
+git add wrangler.toml
+git commit -m "✅ Remove [build] block to validate Pages config"
+git pull origin main --rebase
+git push origin main
