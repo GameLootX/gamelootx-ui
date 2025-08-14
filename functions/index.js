@@ -1,3 +1,4 @@
+// Force redeploy: 2025-08-14
 import { createClient } from "https://esm.sh/@supabase/supabase-js";
 
 export default {
